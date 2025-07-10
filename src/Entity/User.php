@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,6 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * @var Collection<int, ServiceCategory>
+     */
+    #[ORM\OneToMany(targetEntity: ServiceCategory::class, mappedBy: 'author')]
+    private Collection $serviceCategory;
+
+    public function __construct()
+    {
+        $this->serviceCategory = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -157,6 +170,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ServiceCategory>
+     */
+    public function getserviceCategory(): Collection
+    {
+        return $this->serviceCategory;
+    }
+
+    public function addserviceCategory(ServiceCategory $serviceCategory): static
+    {
+        if (!$this->serviceCategory->contains($serviceCategory)) {
+            $this->serviceCategory->add($serviceCategory);
+            $serviceCategory->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeserviceCategory(ServiceCategory $serviceCategory): static
+    {
+        if ($this->serviceCategory->removeElement($serviceCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($serviceCategory->getAuthor() === $this) {
+                $serviceCategory->setAuthor(null);
+            }
+        }
 
         return $this;
     }
