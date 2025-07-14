@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PrestationsController extends AbstractController
 {
-    #[Route('/visitor/prestations', name: 'app_visitor_prestations_index',methods:['GET'])]
+    #[Route('/visitor/prestations', name: 'app_visitor_prestations_index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render('pages/visitor/prestations/index.html.twig');
