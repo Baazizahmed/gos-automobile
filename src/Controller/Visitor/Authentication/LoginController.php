@@ -1,9 +1,6 @@
 <?php
+
 namespace App\Controller\Visitor\Authentication;
-
-
-
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +23,7 @@ class LoginController extends AbstractController
 
         return $this->render('pages/visitor/authentication/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 
