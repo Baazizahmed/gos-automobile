@@ -13,3 +13,9 @@ $body-bg: $light-gray;
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
+
+// Themes
+@import "./themes/base_visitor";
+
+// Base
+@import "./base/typography";
