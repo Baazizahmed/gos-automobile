@@ -69,11 +69,11 @@
 
                         
                             <li class="nav-item">
-                                <a class="my-1 mx-lg-2 btn btn-primary shadow" href="#">Déconnexion</a>
+                                <a class="my-1 mx-lg-2 btn btn-primary shadow" href="{{path('app_logout')}}">Déconnexion</a>
                             </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="my-1 mx-lg-2 btn btn-outline-primary shadow" href="#">Connexion</a>
+                            <a class="my-1 mx-lg-2 btn btn-outline-primary shadow" href="{{path('app_login')}}">Connexion</a>
                         </li>
                         {% endif %}
                     </ul>
