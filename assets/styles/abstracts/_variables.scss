@@ -1,0 +1,11 @@
+$primary-blue: #0a1931;
+$accent-yellow: #ffd100;
+$light-gray: #eef0f2;
+$medium-gray: #6c757d;
+$off-white: #f8f9fa;
+
+$primary: $primary-blue;
+$warning: $accent-yellow; // On utilise la couleur "warning" de Bootstrap pour notre accent
+$light: $light-gray;
+$body-color: $primary-blue;
+$body-bg: $light-gray;
