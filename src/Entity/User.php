@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -16,12 +17,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le prénom ne doit pas dépasser {{ limit }} caractères.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom ne doit pas dépasser {{ limit }} caractères.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "L'email ne doit pas dépasser {{ limit }} caractères.",
+    )]
+    #[Assert\Email(message: "L'email est invalide.")]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -34,6 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
     #[ORM\Column]
     private ?string $password = null;
 
