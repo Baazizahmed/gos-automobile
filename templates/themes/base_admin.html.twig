@@ -22,6 +22,8 @@
 
         {% block dataTables %}{% endblock %}
 
+		{% block select2 %}{% endblock %}
+
         
         {% block stylesheets %}
                 {{ encore_entry_link_tags('app') }}
@@ -196,7 +198,7 @@
 										services
 									</a>
 								<li class="nav-item">
-									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="#">
+									<a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{path('app_admin_user_index')}}">
                                         <i class="fa-solid fa-feather"></i>
 										Utilisateur
 									</a>
