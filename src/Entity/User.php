@@ -53,9 +53,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
+    // On retire les contraintes de validation d'ici. C'est plus propre.
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var string|null Le mot de passe en clair, utilisé uniquement pour les formulaires.
+     *                  Ne sera PAS persisté en base de données.
+     */
+    private ?string $plainPassword = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -141,6 +147,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(?string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

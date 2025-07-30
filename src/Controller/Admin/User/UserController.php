@@ -3,12 +3,14 @@
 namespace App\Controller\Admin\User;
 
 use App\Entity\User;
+use App\Form\AdminUserFormType;
 use App\Form\EditRolesFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin')]
@@ -25,6 +27,38 @@ final class UserController extends AbstractController
     {
         return $this->render('pages/admin/user/index.html.twig', [
             'users' => $this->userRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/create', name: 'app_admin_user_create', methods: ['GET', 'POST'])]
+    public function create(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = new User();
+
+        $form = $this->createForm(AdminUserFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $user->setPassword(
+                $passwordHasher->hashPassword($user, $plainPassword)
+            );
+
+            $user->setRoles(['ROLE_ADMIN']);
+
+            $user->setCreatedAt(new \DateTimeImmutable());
+            $user->setUpdatedAt(new \DateTimeImmutable());
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', "L'administrateur {$user->getFirstName()} a été créé.");
+
+            return $this->redirectToRoute('app_admin_user_index');
+        }
+
+        return $this->render('pages/admin/user/create.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
