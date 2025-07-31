@@ -5,5 +5,187 @@
 {% block description %}Presentation du garage et des services{% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">hello</h1>
+
+{# ========================================================== #}
+    {#                        HERO SECTION                          #}
+    {# ========================================================== #}
+    <header class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    {# Utilisez une image de haute qualité de votre garage ou d'une belle voiture #}
+                    <img src="/images/static/welcome/hero_.png" class="img-fluid" alt="Intérieur du garage GOS Automobile">
+                </div>
+                <div class="col-md-6 text-center text-md-start mt-4 mt-md-0">
+                    <h1 class="display-4 fw-bold">GOS Automobile</h1>
+                    <p class="lead my-4">Votre confiance, notre expertise. Le meilleur service pour votre véhicule, quelle que soit la marque.</p>
+                    <a href="#prestations" class="m-2 btn btn-lg btn-warning shadow">Découvrir nos prestations</a>
+                    <a href="{{ path('app_visitor_contact') }}" class="m-2 btn btn-lg btn-outline-light shadow ms-2">Prendre rendez-vous</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {# ========================================================== #}
+    {#                     QUI SOMMES-NOUS SECTION                  #}
+    {# ========================================================== #}
+    <section id="about-me" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 display-5">Qui sommes-nous ?</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="/images/static/welcome/about-me.jpg" class="img-fluid rounded mb-4 mb-md-0" alt="L'équipe de GOS Automobile">
+                </div>
+                <div class="col-md-6">
+                    <h3>Mon Métier, Votre Carrosserie</h3>
+                    <p class="text-muted">
+                        Depuis toujours, ma passion a été de redonner vie à la tôle et de sublimer les lignes d'une voiture.  carrossier-peintre, et mon atelier est le lieu où la technique rencontre l'art. Pour moi, chaque véhicule est une toile. D'une simple rayure à une restauration complète, je m'engage à traiter chaque projet avec une précision d'orfèvre.
+                        Mon expertise repose sur des années d'expérience et une recherche constante de la perfection. J'utilise des produits de haute qualité et des techniques de colorimétrie de pointe pour garantir une teinte identique à l'origine et un fini miroir impeccable. Mon plus grand plaisir ? Voir votre surprise et votre satisfaction lorsque vous redécouvrez votre voiture, comme au premier jour.
+                    </p>
+                    <p class="text-muted">
+                        Notre équipe est formée en continu sur les dernières technologies pour s'adapter à tous les types de véhicules, des plus récents aux plus anciens. La satisfaction de nos clients est notre meilleure publicité.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ========================================================== #}
+    {#                 DERNIERES PRESTATIONS SECTION                #}
+    {# ========================================================== #}
+<section id="prestations" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-5">Nos dernières actualités</h2>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for post in posts %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm d-flex flex-column">
+                        {% if post.image %}
+                            <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('visitor_post_thumb') }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <img src="/images/static/blog/default-post-image.png" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text text-muted flex-grow-1">
+                                {{ post.content|slice(0, 120) ~ '...' }}
+                            </p>
+                            <a href="#" class="btn btn-primary mt-auto">Lire la suite</a>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-top-0">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-2"></i>Publié {{ post.publishedAt|ago }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">Aucune actualité à afficher pour le moment.</p>
+                </div>
+            {% endfor %}
+            
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="#" class="btn btn-outline-primary">Voir toutes nos actualités</a>
+        </div>
+        
+    </div>
+</section>
+
+    {# ========================================================== #}
+    {#                        CONTACT SECTION                       #}
+    {# ========================================================== #}
+    <div class="py-5 text-center bg-light">
+        <div class="container">
+            <h3 class="fw-light">Prêt à nous confier votre véhicule ?</h3>
+            <p class="lead text-muted">Contactez-nous dès aujourd'hui pour un devis ou un rendez-vous.</p>
+            <a href="{{ path('app_visitor_contact') }}" class="my-3 btn btn-lg btn-warning shadow">Nous contacter</a>
+        </div>
+    </div>
+
+
+
+{# Hero-section #}
+{# <header class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Image à droite sur desktop, en haut sur mobile -->
+            <div class="col-lg-6 order-1 order-lg-2 text-center mb-4 mb-lg-0">
+                <img src="/images/static/welcome/hero_.png" class="img-fluid rounded" alt="GOS Automobile atelier de carrosserie" style="max-height: 450px; object-fit: contain;">
+            </div>
+
+            <!-- Texte à gauche sur desktop, en bas sur mobile -->
+            <div class="col-lg-6 order-2 order-lg-1 text-center text-lg-start">
+                <h1 class="display-4 fw-bold mb-4">Bienvenue! </h1>
+                <p class="lead mb-2">Spécialistes de la carrosserie et de la réparation automobile.</p>
+                <p class="mb-4">Depuis plus de 10 ans, notre équipe vous accompagne avec professionnalisme pour redonner vie à votre véhicule, avec un service rapide, fiable et garanti.</p>
+                <a href="{{path('app_visitor_prestations_index')}}" class="btn btn-primary btn-lg px-4 shadow-sm">Voir nos services</a>
+            </div>
+        </div>
+    </div>
+</header> #}
+
+{# About-me section #}
+ {# <section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-5 fw-semibold text-uppercase text-primary">À propos de GOS Automobile</h2>
+        <div class="row align-items-center">
+            
+            <!-- Image à gauche sur desktop, en haut sur mobile -->
+            <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+                <img src="/images/static/welcome/about-me.png" class="img-fluid rounded shadow-lg" alt="Atelier GOS Automobile" style="max-height: 400px; object-fit: cover;">
+            </div>
+
+            <!-- Texte à droite sur desktop, en bas sur mobile -->
+            <div class="col-lg-6">
+                <p class="mb-3">
+                    GOS AUTOMOBILE est un atelier de carrosserie moderne situé au cœur de la ville, dédié à la remise en état esthétique et fonctionnelle de votre véhicule. Que ce soit pour une rayure, un choc ou une rénovation complète, notre équipe intervient avec précision et savoir-faire.
+                </p>
+                <p class="mb-3">
+                    Notre engagement : un travail soigné, des délais respectés et la satisfaction de chaque client. Grâce à des équipements de pointe et une expertise reconnue, nous redonnons vie à tous types de véhicules, particuliers comme professionnels.
+                </p>
+                <p>
+                    Confiez-nous votre voiture en toute sérénité. Chez GOS Automobile, chaque détail compte.
+                </p>
+            </div>
+        </div>
+    </div>
+</section> #}
+
+ {# Last-posts section #} 
+    {# <section class="py-3">
+        <h2 class="text-center my-3 display-5">Mes derniers articles</h2>
+
+        <div class="container">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-md-4">
+                        <div class="card mb-3 shadow">
+                            <h3 class="card-header">
+                                {{post.title}}
+                            </h3>
+                            <div class="card-body">
+                                <p><strong>Catégorie</strong>: {{post.category.name}}</p>
+                                
+                                <p>
+                                    Publié {{post.publishedAt|ago}}
+                                </p>
+                                <p>
+                                    <a href="" class="btn btn-primary">Lire l'article</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section> #}
+
+
+
 {% endblock %}

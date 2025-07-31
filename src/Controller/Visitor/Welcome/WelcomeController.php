@@ -2,6 +2,7 @@
 
 namespace App\Controller\Visitor\Welcome;
 
+use App\Repository\PostRepository;
 use App\Repository\SettingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ final class WelcomeController extends AbstractController
 {
     public function __construct(
         private SettingRepository $settingRepository,
+        private PostRepository $postRepository,
     ) {
     }
 
@@ -20,8 +22,11 @@ final class WelcomeController extends AbstractController
         $settings = $this->settingRepository->findAll();
         $setting = $settings[0];
 
+        $posts = $this->postRepository->findBy(['isPublished' => true], ['publishedAt' => 'DESC'], 3);
+
         return $this->render('pages/visitor/welcome/index.html.twig', [
             'setting' => $setting,
+            'posts' => $posts,
         ]);
     }
 }
