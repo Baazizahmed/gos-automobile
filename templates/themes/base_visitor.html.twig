@@ -97,99 +97,72 @@
         </main>
 
         {# Footer #}
+
+
+
+
         <footer class="bg-primary text-white pt-5 pb-4">
-            <div class="container text-center text-md-start">
-                <div
-                    class="row">
+    <div class="container">
+        <div class="row">
 
-                    <!-- Section Navigation -->
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h5 class="text-uppercase mb-4 fw-bold text-warning">GOS Automobile</h5>
-                        <p>
-                            Votre garage de confiance pour l'entretien, la réparation et la vente de véhicules de toutes marques.
-                        </p>
-                    </div>
-
-                    <!-- Section Nos Services -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h5 class="text-uppercase mb-4 fw-bold">Nos Services</h5>
-                        <ul
-                            class="nav flex-column">
-                            {# Ici, on pourra plus tard boucler sur les services depuis la BDD #}
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Carrosserie</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Diagnostic</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Vente de véhicules</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Section Liens Utiles -->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h5 class="text-uppercase mb-4 fw-bold">Liens Utiles</h5>
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Tous nos services</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Nous contacter</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a href="#" class="nav-link p-0 text-white-50">Mentions Légales</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Section Contact & Horaires -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h5 class="text-uppercase mb-4 fw-bold">Contact</h5>
-                        <p>
-                            <i class="fas fa-home me-3"></i>
-                            839 rue Darthus  , 33330 VIGNONET</p>
-                        <p>
-                            <i class="fas fa-envelope me-3"></i>
-                            {{setting.email}}
-                        </p>
-                        <p>
-                            <i class="fas fa-phone me-3"></i>
-                            {{setting.phone}}
-                        </p>
-                    </div>
+            <!-- Logo / Google Maps -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold text-warning mb-3">GOS Automobile</h5>
+                <div class="shadow rounded overflow-hidden" style="width: 100%; max-width: 350px; height: 220px;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2829.0321948321293!2d-0.14994061525737024!3d44.84127770020654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd555b2085882a2d%3A0x29be5f4e0a67263e!2sGOS%20AUTOMOBILE!5e0!3m2!1sfr!2sfr!4v1753311995231!5m2!1sfr!2sfr"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
+            </div>
 
-                <hr
-                class="my-4">
+            <!-- Réseaux sociaux -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Liens utiles</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="{{ path('app_visitor_prestations_index') }}" class="text-white-50 text-decoration-none">Tous nos services</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{{ path('app_visitor_contact') }}" class="text-white-50 text-decoration-none">Nous contacter</a>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- Copyright & Réseaux Sociaux -->
-                <div class="d-flex flex-column flex-sm-row justify-content-between">
-                    <p>©
-                        {{ "now"|date("Y") }}
-                        GOS Automobile. Tous droits réservés.</p>
-
-                    <ul class="list-unstyled d-flex">
-                        <li class="ms-3">
-                            <a class="link-light" href="https://www.facebook.com/Vignonet/" aria-label="Facebook">
-                                <i class="fab fa-facebook-f fa-lg"></i>
+            <!-- Liens utiles -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Suivez-nous</h5>
+                
+                <div class="d-flex gap-3 fs-4 justify-content-center justify-content-md-start">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a class="text-white" href="https://www.facebook.com/Vignonet/" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
                             </a>
                         </li>
-                        <li class="ms-3">
-                            <a class="link-light" href="https://www.instagram.com/gos.automobile/" aria-label="Instagram">
-                                <i class="fab fa-instagram fa-lg"></i>
-                            </a>
-                        </li>
-                        <li class="ms-3">
-                            <a class="link-light" href="https://wa.me/33761793691?text=Bonjour%2C+j%27ai+vu+votre+site+et+je+suis+intéressé." aria-label="whatsapp">
-                                <i class="fab fa-whatsapp fa-lg"></i>
+
+                        <li>
+                            <a class="text-white" href="https://www.instagram.com/gos.automobile/" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </footer>
+        </div>
+
+        <hr class="border-light">
+
+        <!-- Bas de footer -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p class="mb-2 mb-md-0">© {{ "now"|date("Y") }} GOS Automobile. Tous droits réservés.</p>
+            
+        </div>
+    </div>
+</footer>
+
+
         
     </body>
 </html>

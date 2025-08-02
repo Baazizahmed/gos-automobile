@@ -1,9 +1,200 @@
 {% extends "themes/base_visitor.html.twig" %}
 
+{% block title %}Nos Prestations - GOS Automobile{% endblock %}
+
+{% block description %}Découvrez en détail toutes les prestations proposées par le garage GOS Automobile : mécanique, carrosserie, diagnostic et bien plus.{% endblock %}
+
+
+{% block main %}
+
+    {# ========================================================== #}
+    {#                 EN-TÊTE DE LA PAGE                         #}
+    {# ========================================================== #}
+    <div class="container-fluid bg-primary text-white py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Nos Prestations</h1>
+            <p class="lead">Un savoir-faire complet au service de votre véhicule.</p>
+        </div>
+    </div>
+
+    {# =aj========================================================= #}
+    {#                 FILTRES PAR CATÉGORIES                       #}
+    {# ========================================================== #}
+    {# <div class="container my-5">
+        <h2 class="text-center mb-4">Filtrer par catégorie</h2>
+        
+       
+        <ul class="nav nav-pills justify-content-center">
+            
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ path('app_visitor_prestations_index') }}">
+                    Toutes les prestations ({{ posts|length }})
+                </a>
+            </li>
+            
+            {% for category in categories %}
+                <li class="nav-item">
+                   
+                    <a class="nav-link" href="#">
+                        {{ category.name }} ({{ category.posts|length }})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div> #}
+    <div class="container my-5">
+    <h2 class="text-center mb-4">Filtrer par catégorie</h2>
+    <div class="row text-center gap-3 gap-md-0">
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Les prestations
+                    </button>
+                    <ul class="dropdown-menu">
+                    
+                        {% if categories is not empty %}
+                            
+                            {% for category in categories %}
+                            {% set categoryPostsLength = category.posts|length %}
+                               <li><a class="dropdown-item" href="{{path('app_visitor_prestations_index')}}">{{category.name}} ({{categoryPostsLength}} service{{categoryPostsLength > 1 ? 's': ''}}) </a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a class="dropdown-item" href="#">Aucune catégorie disponible</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+    </div>
+    </div>
+    
+
+
+    {# ========================================================== #}
+    {#                 LISTE DES PRESTATIONS (POSTS)              #}
+    {# ========================================================== #}
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            
+            {% for post in posts %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm overflow-hidden">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <div class="card-img-container">
+                                {% if post.image %}
+                                    <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('visitor_post_thumb') }}" class="card-img-top" alt="{{ post.title }}">
+                                {% else %}
+                                    <img src="{{ asset('/images/static/prestations/do-not-take-photos.png') }}" class="card-img-top" alt="{{ post.title }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text text-muted">
+                                    {{ post.description }}
+                                </p>
+                            </div>
+                        </a>
+                        <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
+                             <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                                {{ post.category.name }}
+                            </span>
+                            <small class="text-muted">{{ post.publishedAt|ago }}</small>
+                    <p>
+                        <a href="#" class="btn btn-lg btn-primary shadow">Lire l'article</a>
+                    </p>
+                            
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Aucune prestation ne correspond à cette catégorie pour le moment.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Pagination (si vous utilisez KNP Paginator) #}
+        <div class="d-flex justify-content-center mt-5">
+            {# {{ knp_pagination_render(posts) }} #}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+{# {% extends "themes/base_visitor.html.twig" %}
+
 {% block title %}Prestations{% endblock %}
 
 {% block description %}Presentation du garage et des services{% endblock %}
 
+
 {% block main %}
     <h1 class="text-center my-3 display-5">Liste des services</h1>
+
+    
+    <div class="container mt-5">
+        <div class="row text-center gap-3 gap-md-0">
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Les prestations
+                    </button>
+                    <ul class="dropdown-menu">
+                    
+                        {% if categories is not empty %}
+                            
+                            {% for category in categories %}
+                            {% set categoryPostsLength = category.posts|length %}
+                               <li><a class="dropdown-item" href="{{path('app_visitor_prestations_index')}}">{{category.name}} ({{categoryPostsLength}} service{{categoryPostsLength > 1 ? 's': ''}}) </a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a class="dropdown-item" href="#">Aucune catégorie disponible</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-md-10 col-lg-10 mx-auto">
+                {% for post in posts %}
+                    <article class="card mb-3 shadow">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                {% if post.image %}
+                                    <img src="{{vich_uploader_asset(post, 'imageFile') | imagine_filter('visitor_post_thumb') }}" class="rounded-start w-100 h-100" alt="{{post.title}}">
+                                {% else %}
+                                    <img src="/images/static/prestations/do-not-take-photos.png" class="img-fluid rounded-start" alt="{{post.title}}">
+                                {% endif %}
+                                
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                <h2 class="card-title">{{post.title}}</h2>
+                                <p class="card-text">{{post.description}}</p>
+                                    
+                                    <p><strong>Catégorie: </strong>{{post.category.name}}</p>
+                                    
+                                    
+                                    <p class="card-text"><small class="text-body-secondary">Publié {{post.publishedAt|ago}}</small></p>
+                                    <p>
+                                        <a href="#" class="btn btn-lg btn-primary shadow">Lire l'article</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <hr class="my-3">
+                    {% endfor %}
+
+                
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+ #}
