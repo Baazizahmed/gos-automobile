@@ -1,0 +1,56 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block description %}{{ post.description|u.truncate(155, '...') }}{% endblock %}
+
+{% block main %}
+
+    {# ========================================================== #}
+    {#                 LOGIQUE DE BANNIÈRE CORRIGÉE                 #}
+    {# ========================================================== #}
+    {% set banner_style = '' %} {# On initialise la variable #}
+    
+    {# On vérifie si post.image existe ET n'est pas vide #}
+    {% if post.image %}
+        {# Si oui, on construit le style avec l'image filtrée #}
+        {% set banner_image_url = vich_uploader_asset(post, 'imageFile') | imagine_filter('post_banner') %}
+        {% set banner_style = "background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('" ~ banner_image_url ~ "');" %}
+    {% else %}
+        {# Sinon, on met juste une couleur de fond (notre bleu primaire) #}
+        {% set banner_style = "background-color: #0a1931;" %}
+    {% endif %}
+    {# ========================================================== #}
+
+
+    <!-- Section Bannière -->
+    <header class="post-header-banner d-flex align-items-center justify-content-center text-center text-white" 
+            style="{{ banner_style }}"> {# On applique le style ici #}
+        <div class="container">
+            <p class="mb-2">
+                <a href="{{ path('app_visitor_prestations_filter_by_category', {'id': post.category.id, 'slug': post.category.slug}) }}" class="badge bg-warning text-dark text-decoration-none my-3">{{ post.category.name }}</a>
+            </p>
+            <h1 class="display-3 fw-bold">{{ post.title|u.truncate('60', '...') }}</h1>
+            {% if post.publishedAt %}
+                <p class="lead">Publié le {{ post.publishedAt|date('d F Y') }}</p>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Section Contenu -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <article class="post-content lh-lg fs-5">
+                    {{ post.content|nl2br }}
+                </article>
+
+                <hr class="my-5">
+
+                <a href="{{ path('app_visitor_prestations_index') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Retour à toutes les prestations
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

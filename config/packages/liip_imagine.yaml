@@ -40,3 +40,11 @@ liip_imagine:
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
                 thumbnail: { size: [300, 300]}
+
+        post_banner:
+            quality: 80 # Bonne qualité, mais optimisé pour le web
+            filters:
+                # On redimensionne l'image pour qu'elle ne soit pas trop lourde,
+                # tout en gardant un ratio large de type 16:9.
+                # 'outbound' coupera l'image si elle n'a pas le bon ratio.
+                thumbnail: { size: [1920, 1080], mode: outbound }
