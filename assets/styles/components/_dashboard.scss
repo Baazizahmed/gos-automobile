@@ -1,0 +1,46 @@
+// assets/styles/components/_dashboard.scss
+
+.card-link {
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+// On utilise les variables Bootstrap standards (que vous avez redéfinies)
+.card .border-left-primary {
+    border-left: 0.25rem solid var(--bs-primary) !important;
+}
+
+.card .border-left-success {
+    border-left: 0.25rem solid var(--bs-success) !important;
+}
+
+.card .border-left-info {
+    border-left: 0.25rem solid var(--bs-info) !important;
+}
+
+.card .border-left-warning {
+    border-left: 0.25rem solid var(--bs-warning) !important;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+// On peut définir de nouvelles variables si elles sont très spécifiques
+$gray-300: #d1d3e2;
+$gray-800: #5a5c69;
+
+.text-gray-300 {
+    color: $gray-300 !important;
+}
+.text-gray-800 {
+    color: $gray-800 !important;
+}

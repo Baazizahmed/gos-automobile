@@ -72,13 +72,18 @@
                         <td>{{user.createdAt|date()}}</td>
                         <td>{{user.updatedAt|date()}}</td>
                         <td>
+                        
+                       
                             {% if 'ROLE_SUPER_ADMIN' not in user.roles %}
-                                <a href="{{path('app_admin_user_edit_roles', {'id':user.id})}}" class="m-1 btn btn-sm btn-secondary">Modifier</a>
-                                <form class="m-1 d-inline" action="{{path('app_admin_user_delete', {'id':user.id})}}" method="post">
+                            
+                                <a href="{{path('app_admin_user_edit_roles', {'id':user.id})}}" class="m-1 btn btn-sm btn-secondary ">Modifier</a>
+                                <form class="d-inline" action="{{path('app_admin_user_delete', {'id':user.id})}}" method="post">
                                     <input type="hidden" name="csrf_token" value="{{csrf_token('delete-user-'~user.id)}}">
                                     <input type="submit" class="btn btn-sm btn-danger" value="Supprimer" onclick="return confirm('Confirmer la suppression?')">
                                 </form>
                             {% endif %}
+
+                            
                             
                         </td>
                     </tr>
