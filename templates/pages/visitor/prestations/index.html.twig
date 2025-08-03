@@ -4,6 +4,11 @@
 
 {% block description %}Découvrez en détail toutes les prestations proposées par le garage GOS Automobile : mécanique, carrosserie, diagnostic et bien plus.{% endblock %}
 
+{% block knp_paginator_rel_links %}
+    {# rel links for pagination #}
+    {{ knp_pagination_rel_links(posts) }}
+{% endblock %}
+
 
 {% block main %}
 
@@ -60,10 +65,10 @@
 
                         <div class="card-body d-flex flex-column">
                            
-                            <h5 class="card-title">{{ post.title }}</h5>
+                            <h5 class="card-title">{{post.title|u.truncate('60', '...')}}</h5>
 
                             <p class="card-text text-muted flex-grow-1">
-                                {{ post.description }}
+                                {{post.description|u.truncate('80', '...')}}
                             </p>
                         </div>
 
@@ -75,7 +80,7 @@
                         </span>
                         
                        
-                        <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
+                        <a href="{{path('app_visitor_prestations_post_show', {'id':post.id, 'slug':post.slug})}}" class="btn btn-sm btn-outline-primary">Détails</a>
                     </div>
                 </div>
             </div>

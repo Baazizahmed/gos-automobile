@@ -3,14 +3,15 @@
 namespace App\Controller\Visitor\Prestations;
 
 use App\Entity\Category;
+use App\Entity\Post;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Repository\SettingRepository;
-use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class PrestationsController extends AbstractController
 {
@@ -18,7 +19,7 @@ final class PrestationsController extends AbstractController
         private CategoryRepository $categoryRepository,
         private SettingRepository $settingRepository,
         private PostRepository $postRepository,
-        private PaginatorInterface $paginator
+        private PaginatorInterface $paginator,
     ) {
     }
 
@@ -48,7 +49,7 @@ final class PrestationsController extends AbstractController
     {
         $query = $this->postRepository->findBy([
             'category' => $category,
-            'isPublished' => true
+            'isPublished' => true,
         ], ['publishedAt' => 'DESC']);
 
         $posts = $this->paginator->paginate(
@@ -60,6 +61,14 @@ final class PrestationsController extends AbstractController
         return $this->render('pages/visitor/prestations/index.html.twig', [
             'categories' => $this->categoryRepository->findAll(),
             'posts' => $posts,
+        ]);
+    }
+
+    #[Route('/prestations/article/{id<\d+>}/{slug}', name: 'app_visitor_prestations_post_show', methods: ['GET', 'POST'])]
+    public function showPost(Post $post, Request $request): Response
+    {
+        return $this->render('pages/visitor/prestations/show.html.twig', [
+            'post' => $post,
         ]);
     }
 }
