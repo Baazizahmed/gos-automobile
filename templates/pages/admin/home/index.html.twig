@@ -1,9 +1,159 @@
-{% extends 'themes/base_admin.html.twig' %}
+{% extends "themes/base_admin.html.twig" %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}Tableau de bord
+{% endblock %}
 
-{% block description %}Tableau de bord{% endblock %}
+{% block description %}Tableau de bord de l'administration GOS Automobile
+{% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Salut! admin: {{ app.user.firstName }} {{ app.user.lastName }}</h1>
+
+
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+		<h1 class="h2">Tableau de Bord</h1>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<span class="text-muted">{% set current_hour = "now"|date("H") %}
+				{% if current_hour >= 18 or current_hour < 4 %}
+					Bonsoir,
+				{% else %}
+					Bonjour,
+				{% endif %}
+				{{ app.user.firstName }}
+				!
+            </span>
+		</div>
+	</div>
+
+
+	<div class="row">
+
+
+		<div class="col-xl-3 col-md-6 mb-4">
+			<a href="{{ path('app_admin_post_index') }}" class="card-link">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+									Prestations</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">{{ posts_count }}</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-newspaper fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+
+		<div class="col-xl-3 col-md-6 mb-4">
+			<a href="{{ path('app_admin_category_index') }}" class="card-link">
+				<div class="card border-left-success shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+									Catégories</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">{{ categories_count }}</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-folder fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<div class="col-xl-3 col-md-6 mb-4">
+				<a href="{{ path('app_admin_user_index') }}" class="card-link">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+										Utilisateurs</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">{{ users_count }}</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-users fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+		{% endif %}
+
+
+		<div class="col-xl-3 col-md-6 mb-4">
+			<a href="{{ path('app_admin_post_create') }}" class="card-link">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+									Action Rapide</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">Nouvelle Prestation</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-plus-circle fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+	</div>
+
+
+	<div class="row mt-4">
+		<div class="col-12">
+			<div class="card shadow">
+				<div class="card-header">
+					<h5 class="mb-0">Dernières Prestations Modifiées</h5>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover mb-0">
+						<thead>
+							<tr>
+								<th>Titre</th>
+								<th>Catégorie</th>
+								<th>Dernière modification</th>
+								<th>Statut</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{% for post in latestPosts %}
+								<tr>
+									<td>
+										<a href="{{ path('app_admin_post_edit', {'id': post.id}) }}">{{ post.title|u.truncate('60', '...') }}</a>
+									</td>
+									<td>{{ post.category.name }}</td>
+									<td>{{ post.updatedAt|date('d/m/Y H:i') }}</td>
+									<td>
+										{% if post.isPublished %}
+											<span class="badge bg-success">Publié</span>
+										{% else %}
+											<span class="badge bg-secondary">Pause</span>
+										{% endif %}
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4" class="text-center py-4">Aucune prestation n'a encore été créée.</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

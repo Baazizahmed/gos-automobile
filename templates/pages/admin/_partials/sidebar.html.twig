@@ -1,0 +1,66 @@
+{# templates/admin/_partials/sidebar.html.twig #}
+
+{% set current_route = app.request.attributes.get('_route') %}
+
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route == 'app_admin_home' %}active{% endif %}" href="{{ path('app_admin_home') }}">
+            <i class="fa-solid fa-house"></i>
+            Tableau de bord
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route starts with 'app_admin_category' %}active{% endif %}" href="{{ path('app_admin_category_index') }}">
+            <i class="fa-solid fa-folder"></i>
+            Catégories
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route starts with 'app_admin_post' %}active{% endif %}" href="{{ path('app_admin_post_index') }}">
+            <i class="fa-solid fa-feather"></i>
+            Prestations
+        </a>
+    </li>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route starts with 'app_admin_user' %}active{% endif %}" href="{{ path('app_admin_user_index') }}">
+            <i class="fa-solid fa-users"></i>
+            Utilisateurs
+        </a>
+    </li>
+    {% endif %}
+</ul>
+
+<hr class="my-3">
+
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route starts with 'app_admin_profile' %}active{% endif %}" href="{{ path('app_admin_profile_index') }}">
+            <i class="fa-solid fa-user"></i>
+            Mon profil
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark {% if current_route starts with 'app_admin_setting' %}active{% endif %}" href="{{ path('app_admin_setting_index') }}">
+            <i class="fa-solid fa-gear"></i>
+            Paramètres
+        </a>
+    </li>
+</ul>
+
+<hr class="my-3">
+
+<ul class="nav flex-column mb-auto">
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{ path('app_visitor_welcome') }}">
+            <i class="fa-solid fa-rotate-left"></i>
+            Retour au site
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 text-dark" href="{{ path('app_logout') }}">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Déconnexion
+        </a>
+    </li>
+</ul>

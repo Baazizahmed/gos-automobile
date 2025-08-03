@@ -4,3 +4,19 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.navbar-brand.brand-logo-font {
+    // On applique la police "Pacifico"
+    font-family: 'Pacifico', cursive;
+    
+    // On peut ajuster la taille et le style
+    font-size: 1.5rem; // Un peu plus grand pour que ça ressorte
+    font-weight: 400;  // Pacifico est déjà en gras, 400 est la bonne valeur
+
+    // On annule les styles de fond et d'ombre
+    background-color: transparent !important;
+    box-shadow: none !important;
+
+    // On peut même ajouter une couleur personnalisée si besoin
+    // color: $accent-yellow; // Par exemple, pour l'avoir en jaune
+}
