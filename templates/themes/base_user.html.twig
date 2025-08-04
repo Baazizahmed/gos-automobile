@@ -19,6 +19,9 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
+
+    {% set pathClient = app.request.pathInfo %}
+
 </head>
 <body class="body-visitor d-flex flex-column min-vh-100">
 
@@ -36,21 +39,27 @@
                     {% set current_route = app.request.attributes.get('_route') %}
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link {% if current_route == 'app_user_home' %}active{% endif %}" href="{{ path('app_user_home') }}">Accueil</a>
+                            <a class="nav-link {{ pathClient == path('app_user_home') ? 'jd-active' : '' }}" {{  pathClient == path('app_user_home') ? 'aria-current="page"' : ''}} href="{{path('app_user_home')}}"><i class="fa-solid fa-home"></i> Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if current_route starts with 'app_user_profile' %}active{% endif %}" href="{{ path('app_user_profile_index') }}">Mon profil</a>
+                            <a class="nav-link {% if current_route starts with 'app_user_profile' %}jd-active{% endif %}" {% if current_route starts with 'app_user_profile' %} aria-current="page" {% endif %} href="{{ path('app_user_profile_index') }}">
+                                <i class="fa-solid fa-user"></i>
+                                Mon profil
+                            </a>
+
+
+                            {# <a class="nav-link {% if current_route starts with 'app_user_profile' %}active{% endif %}" href="{{ path('app_user_profile_index') }}">Mon profil</a> #}
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin_home') }}">Espace admin</a>
+                                <a class="nav-link" href="{{ path('app_admin_home') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Espace admin</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_visitor_welcome') }}">Retour au site</a>
+                            <a class="nav-link" href="{{ path('app_visitor_welcome') }}"><i class="fa-solid fa-rotate-left"></i> Retour au site</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
                         </li>
                     </ul>
                 </div>
