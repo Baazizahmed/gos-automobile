@@ -1,0 +1,45 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}Accès Interdit (Erreur 403) - GOS Automobile{% endblock %}
+{% block description %}Vous n'avez pas les autorisations nécessaires pour consulter cette page du site GOS Automobile.{% endblock %}
+
+{% block meta_robots %}
+    <meta name="robots" content="noindex, follow">
+{% endblock %}
+
+
+{% block main %}
+<div class="container my-5">
+    <div class="row align-items-center justify-content-center">
+        
+        <div class="col-md-5 d-none d-md-block">
+            <img src="/images/static/errors/403-illustration.png" class="img-fluid" alt="Illustration de sécurité informatique avec une clé et un bouclier">
+        </div>
+
+        <div class="col-md-6 text-center text-md-start">
+            
+            <h1 class="display-1 fw-bold text-danger">403</h1>
+            <h2 class="h3 mb-3">Accès non autorisé</h2>
+            <p class="lead text-muted mb-4">
+                Il semble que vous n'ayez pas la bonne clé pour accéder à cette zone. Seul le personnel autorisé peut entrer.
+            </p>
+            
+            <div class="mt-4">
+              
+                {% if app.user %}
+                    <a href="{{ path('app_user_home') }}" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="fas fa-user-circle me-2"></i>
+                        Retourner à mon espace
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_visitor_welcome') }}" class="btn btn-warning btn-lg shadow-sm">
+                        <i class="fas fa-home me-2"></i>
+                        Retourner à l'accueil
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
